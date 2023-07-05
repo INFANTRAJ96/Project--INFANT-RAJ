@@ -1,0 +1,73 @@
+CREATE TABLE Events (
+  Event_id SERIAL PRIMARY KEY,
+  Event_name VARCHAR(20),
+  Event_date DATE,
+  Event_location VARCHAR(20),
+  Event_description TEXT
+);
+
+CREATE TABLE Attendees (
+  Attendee_id SERIAL PRIMARY KEY,
+  Attendee_Name VARCHAR(20),
+  Attendee_Phone INT,
+  Attendee_Email VARCHAR(20),
+  Attendee_City VARCHAR(20)
+);
+
+CREATE TABLE Registrations (
+  Registration_ID SERIAL PRIMARY KEY,
+  Event_id INT,
+  Attendee_id INT,
+  Registration_Date DATE,
+  Registration_Amount INT
+);
+
+INSERT INTO Events (Event_id, Event_name, Event_date, Event_location, Event_description)
+VALUES
+(2001, 'Yuvan rockz', '2023-07-02', 'chennai', 'A music concert by Yuvan'),
+(2002, 'Rahmanic', '2023-06-05', 'bangalore', 'A music concert by Rahman'),
+(2003, 'Tectonic', '2023-05-04', 'mumbai', 'Standup comedy by Vignesh');
+
+INSERT INTO Attendees (Attendee_id, Attendee_Name, Attendee_Phone, Attendee_Email, Attendee_City)
+VALUES
+(501, 'INFANT', '8888888888', 'infant@gmail.com', 'chennai'),
+(502, 'HIMADAR', '7777777777', 'himadar@gmail.com', 'bangalore'),
+(503, 'JUNAID', '6666666666', 'junaid@gmail.com', 'chennai'),
+(504, 'SMILEY', '4444444444', 'smiley@gmail.com', 'mumbai'),
+(505, 'DEEPANA', '5555555555', 'deepana@gmail.com', 'chennai');
+
+INSERT INTO Registrations (Registration_ID, Event_id, Attendee_id, Registration_Date, Registration_Amount)
+VALUES
+(101, 2001, 501, '2023-03-05', 600),
+(102, 2002, 502, '2023-03-20', 1000),
+(103, 2001, 503, '2023-04-10', 600),
+(104, 2003, 504, '2023-03-06', 800),
+(105, 2003, 505, '2023-04-05', 800);
+
+INSERT INTO Events (Event_id, Event_name, Event_date, Event_location, Event_description)
+VALUES (2004, 'BASH', '2023-08-05', 'chennai', 'Annual culture fest');
+
+UPDATE Events
+SET Event_date = '2023-06-10'
+WHERE Event_name = 'Rahmanic';
+
+DELETE FROM Events
+WHERE Event_name = 'Tectonic';
+
+INSERT INTO Attendees (Attendee_id, Attendee_Name, Attendee_Phone, Attendee_Email, Attendee_City)
+VALUES (506, 'DINESH', '1313131313', 'dinesh@gmail.com', 'madurai');
+
+INSERT INTO Registrations (Registration_ID, Event_id, Attendee_id, Registration_Date, Registration_Amount)
+VALUES (106, 2004, 506, '2023-07-05', 500);
+
+SELECT *
+FROM Events;
+
+SELECT a.*
+FROM Attendees a
+JOIN Registrations r ON a.Attendee_id = r.Attendee_id
+WHERE r.Event_id = 2002;
+
+SELECT COUNT(*) AS Total_Attendees, AVG(Registration_Amount) AS Average_Amount
+FROM Registrations
+WHERE Event_id = 2001;

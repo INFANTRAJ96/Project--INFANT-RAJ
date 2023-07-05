@@ -1,0 +1,56 @@
+CREATE TABLE student_table (
+  STU_ID SERIAL PRIMARY KEY,
+  STU_NAME VARCHAR(20),
+  DEPARTMENT VARCHAR(20),
+  PHONE_NO VARCHAR(20),
+  EMAIL_ID VARCHAR(20),
+  ADDRESS TEXT,
+  DOB DATE,
+  GENDER VARCHAR(20),
+  MAJOR VARCHAR(20),
+  GPA INT,
+  GRADE VARCHAR(20)
+);
+
+INSERT INTO student_table (STU_ID, STU_NAME, DEPARTMENT, PHONE_NO, EMAIL_ID, ADDRESS, DOB, GENDER, MAJOR, GPA, GRADE)
+VALUES
+(1001, 'INFANT', 'BA', '8888888888', 'infant@gmail.com', 'chennai', '2000-01-02', 'Male', 'History', 7, 'C'),
+(1002, 'HIMADAR', 'BA', '7777777777', 'himadar@gmail.com', 'vellore', '2002-02-03', 'Male', 'History', 8, 'B'),
+(1003, 'JUNAID', 'BA', '6666666666', 'junaid@gmail.com', 'pondy', '1999-03-04', 'Male', 'History', 8, 'B'),
+(1004, 'SMILEY', 'BA', '4444444444', 'smiley@gmail.com', 'chennai', '2001-04-05', 'Female', 'History', 9, 'A'),
+(1005, 'DEEPANA', 'BA', '5555555555', 'deepana@gmail.com', 'trichy', '2000-05-06', 'Female', 'History', 7, 'C'),
+(1006, 'GLADIA', 'BA', '4545454545', 'gladia@gmail.com', 'pondy', '2002-06-07', 'Female', 'History', 4, 'F'),
+(1007, 'DINESH', 'BA', '1313131313', 'dinesh@gmail.com', 'madurai', '2002-08-06', 'Male', 'History', 9, 'A');
+
+SELECT *
+FROM student_table
+ORDER BY GRADE DESC;
+
+SELECT *
+FROM student_table
+WHERE GENDER = 'Male';
+
+
+SELECT *
+FROM student_table
+WHERE GPA < 5;
+
+UPDATE student_table
+SET EMAIL_ID = 'infantraj84@gmail.com', GRADE = '9'
+WHERE STU_ID = 1001;
+
+SELECT STU_NAME, (Current_date - DOB)*0.0027 AS AGE
+FROM student_table
+WHERE GRADE = 'B';
+
+
+SELECT DEPARTMENT, GENDER, AVG(GPA) AS AVERAGE_GPA
+FROM student_table
+GROUP BY DEPARTMENT, GENDER;
+
+ALTER TABLE student_table
+RENAME TO student_info;
+
+SELECT STU_NAME
+FROM student_info
+WHERE GPA in (SELECT MAX(GPA) FROM student_info);

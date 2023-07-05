@@ -1,0 +1,47 @@
+CREATE TABLE Sales_sample (
+  Product_id SERIAL PRIMARY KEY,
+  Region VARCHAR(50),
+  Sales_Date DATE,
+  Sales_amount INT
+);
+
+INSERT INTO Sales_sample (Product_id, Region, Sales_Date, Sales_amount)
+VALUES
+(T1,'west', '2023-06-01', 2000),
+(T2,'north', '2023-06-02', 5000),
+(T3,'east', '2023-06-05', 6000),
+(T4,'south', '2023-06-02', 1000),
+(T5,'north', '2023-06-05', 10000),
+(T6,'east', '2023-06-02', 3000),
+(T7,'south', '2023-06-05', 2500),
+(T8,'west', '2023-06-01', 4500),
+(T9,'west', '2023-06-02', 7000),
+(T10,'south', '2023-06-05', 8500);
+
+SELECT Region, Product_id, SUM(Sales_amount) AS Total_Sales
+FROM Sales_sample
+GROUP BY Region, Product_id
+ORDER BY Region, Product_id;
+
+SELECT Region, Product_id, SUM(Sales_amount) AS Total_Sales
+FROM Sales_sample
+GROUP BY ROLLUP (Region, Product_id)
+ORDER BY Region, Product_id;
+
+-- By Product
+SELECT Product_id, SUM(Sales_amount) AS Total_Sales
+FROM Sales_sample
+GROUP BY Product_id
+ORDER BY Product_id;
+
+-- By Region
+SELECT Region, SUM(Sales_amount) AS Total_Sales
+FROM Sales_sample
+GROUP BY Region
+ORDER BY Region;
+
+-- By Date
+SELECT Sales_Date, SUM(Sales_amount) AS Total_Sales
+FROM Sales_sample
+GROUP BY Sales_Date
+ORDER BY Sales_Date;
